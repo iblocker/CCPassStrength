@@ -75,7 +75,7 @@ NSInteger countLetter (NSString *password, NSInteger type) {
  @return 强度
  */
 - (NSInteger)checkPasswordStrength {
-    if ([self equalsNull:self] || [self isCharEqual]) {
+    if ([self isNull] || [self isCharEqual]) {
         return 0;
     }
     NSInteger len = self.length;
@@ -104,17 +104,14 @@ NSInteger countLetter (NSString *password, NSInteger type) {
         level++;
     }
     
-    if ((len > 6 && countLetter(self, NUM) > 0 && countLetter(self, SMALL_LETTER) > 0
-         && countLetter(self, CAPITAL_LETTER) > 0) || (countLetter(self, NUM) > 0
-                                                           && countLetter(self, SMALL_LETTER) > 0 && countLetter(self, OTHER_CHAR) > 0)
-        || (countLetter(self, NUM) > 0 && countLetter(self, CAPITAL_LETTER) > 0
-            && countLetter(self, OTHER_CHAR) > 0) || (countLetter(self, SMALL_LETTER) > 0
-                                                          && countLetter(self, CAPITAL_LETTER) > 0 && countLetter(self, OTHER_CHAR) > 0)) {
+    if ((len > 6 && countLetter(self, NUM) > 0 && countLetter(self, SMALL_LETTER) > 0 && countLetter(self, CAPITAL_LETTER) > 0)
+        || (countLetter(self, NUM) > 0 && countLetter(self, SMALL_LETTER) > 0 && countLetter(self, OTHER_CHAR) > 0)
+        || (countLetter(self, NUM) > 0 && countLetter(self, CAPITAL_LETTER) > 0 && countLetter(self, OTHER_CHAR) > 0)
+        || (countLetter(self, SMALL_LETTER) > 0 && countLetter(self, CAPITAL_LETTER) > 0 && countLetter(self, OTHER_CHAR) > 0)) {
             level++;
         }
     
-    if (len > 8 && countLetter(self, NUM) > 0 && countLetter(self, SMALL_LETTER) > 0
-        && countLetter(self, CAPITAL_LETTER) > 0 && countLetter(self, OTHER_CHAR) > 0) {
+    if (len > 8 && countLetter(self, NUM) > 0 && countLetter(self, SMALL_LETTER) > 0 && countLetter(self, CAPITAL_LETTER) > 0 && countLetter(self, OTHER_CHAR) > 0) {
         level++;
     }
     
@@ -127,17 +124,14 @@ NSInteger countLetter (NSString *password, NSInteger type) {
         level++;
     }
     
-    if ((len > 8 && countLetter(self, NUM) >= 2 && countLetter(self, SMALL_LETTER) >= 2
-         && countLetter(self, CAPITAL_LETTER) >= 2) || (countLetter(self, NUM) >= 2
-                                                            && countLetter(self, SMALL_LETTER) >= 2 && countLetter(self, OTHER_CHAR) >= 2)
-        || (countLetter(self, NUM) >= 2 && countLetter(self, CAPITAL_LETTER) >= 2
-            && countLetter(self, OTHER_CHAR) >= 2) || (countLetter(self, SMALL_LETTER) >= 2
-                                                           && countLetter(self, CAPITAL_LETTER) >= 2 && countLetter(self, OTHER_CHAR) >= 2)) {
+    if ((len > 8 && countLetter(self, NUM) >= 2 && countLetter(self, SMALL_LETTER) >= 2 && countLetter(self, CAPITAL_LETTER) >= 2)
+        || (countLetter(self, NUM) >= 2 && countLetter(self, SMALL_LETTER) >= 2 && countLetter(self, OTHER_CHAR) >= 2)
+        || (countLetter(self, NUM) >= 2 && countLetter(self, CAPITAL_LETTER) >= 2 && countLetter(self, OTHER_CHAR) >= 2)
+        || (countLetter(self, SMALL_LETTER) >= 2 && countLetter(self, CAPITAL_LETTER) >= 2 && countLetter(self, OTHER_CHAR) >= 2)) {
             level++;
         }
     
-    if (len > 10 && countLetter(self, NUM) >= 2 && countLetter(self, SMALL_LETTER) >= 2
-        && countLetter(self, CAPITAL_LETTER) >= 2 && countLetter(self, OTHER_CHAR) >= 2) {
+    if (len > 10 && countLetter(self, NUM) >= 2 && countLetter(self, SMALL_LETTER) >= 2 && countLetter(self, CAPITAL_LETTER) >= 2 && countLetter(self, OTHER_CHAR) >= 2) {
         level++;
     }
     
@@ -253,12 +247,11 @@ NSInteger countLetter (NSString *password, NSInteger type) {
 
 /**
  判断字符串是 空格、空("")还是null。
- 
- @param str 字符串
+
  @return 判空
  */
-- (bool)equalsNull:(NSString *)str {
-    if (str == nil || !str.length || [str isEqual:NSNull.null]) {
+- (BOOL)isNull {
+    if (self == nil || self == NULL || !self.length || [self isEqual:NSNull.null]) {
         return YES;
     }
     return NO;
@@ -290,18 +283,5 @@ NSInteger countLetter (NSString *password, NSInteger type) {
     NSPredicate *regex = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", @"^[0-9]*$"];
     return [regex evaluateWithObject:self];
 }
-
-/**
- 判断字符串是 空格、空("")还是null。
- 
- @return 判空
- */
-- (BOOL)equalsNull {
-    if (self == nil || !self.length || [self isEqual:NSNull.null] || self == NULL) {
-        return true;
-    }
-    return false;
-}
-
 
 @end
